@@ -1750,14 +1750,19 @@ console.log(remove_from_right([1, 2, 3], -4));
 
 //
 // Extend a 3-digit color code to a 6-digit color code
-const extend_Hex = (shortHex) => (
+const extend_Hex = (shortHex) =>
+  "#" +
+  shortHex
+    .slice(shortHex.startsWith("#") ? 1 : 0)
+    .split("")
+    .map((x) => x + x)
+    .join("");
 
-)
+console.log(extend_Hex("#03f"));
+console.log(extend_Hex("05a"));
 
-console.log(extend_Hex('#03f'));
-console.log(extend_Hex('05a'));
 //
-//
+// 21
 //
 //
 //
