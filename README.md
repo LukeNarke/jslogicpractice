@@ -39,4 +39,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## From here
 
-Putting all kinds of js logic in this repo for reference and usage. Possibly an open source project of some sorts.
+Putting all kinds of JavaScript logic in this repo for reference and usage. Possibly an open source project of some sorts.
