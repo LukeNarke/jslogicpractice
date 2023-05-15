@@ -1584,34 +1584,178 @@ const dog = {
 console.log(dig(data, "level3"));
 console.log(dig(data, "level4"));
 console.log(dig(dog, "message"));
+
 //
+// Convert the number to a string, then build an array
+const digitize = (num) => {
+  return Array.from(String(num), Number);
+};
+console.log(digitize(123));
+console.log(digitize(1230));
+
 //
+// Filter out the specified values from a specified array. Return the original array without filtered values
+const pull = (arr, ...args) => {
+  // put a filter inside a forEach loop and make the arr not include any of values from the args
+  args.forEach((val) => (arr = arr.filter((item) => item != val)));
+  return arr;
+};
+let arra1 = ["a", "b", "c", "a", "b", "c"];
+console.log(pull(arra1, "a", "c"));
+let arra2 = ["a", "b", "c", "a", "b", "c"];
+console.log(pull(arra2, "b"));
+
 //
+// Combine the numbers of a given array into an array containing all combinations (skipped as of 5/3/23)
+const powerset = (arr) => {
+  let res = arr.reduce(
+    (prev, val) => {
+      return [
+        ...prev,
+        ...prev.map((p) => {
+          return [...p, val];
+        }),
+      ];
+    },
+    [[]]
+  );
+  return res;
+};
+console.log(powerset([1, 2]));
+console.log(powerset([1, 2, 3]));
+console.log(powerset([1, 2, 3, 4]));
+
 //
+// Extract values at specified indexes from a specified array
+const pull_at_Index = (arr, pullArr) => {
+  arr = arr.filter((val, i) => pullArr.includes(i));
+  return arr;
+};
+let arr1 = ["a", "b", "c", "d", "e", "f"];
+console.log(pull_at_Index(arr1, [1, 3]));
+let arr2 = [1, 2, 3, 4, 5, 6, 7];
+console.log(pull_at_Index(arr2, [4]));
+
 //
+// Generate a random hexadecimal color code
+const random_hex_color_code = () => {
+  // storing all letter and digit combinations
+  // for html color code
+  let letters = "0123456789ABCDEF";
+  // html color code starts with #
+  let color = "#";
+  // generating 6 times as HTML color code consist
+  // of 6 letter or digits
+  for (let i = 0; i < 6; i++) color += letters[Math.floor(Math.random() * 16)];
+  return color;
+};
+
+console.log(random_hex_color_code());
+
 //
+// Remove non ASCII characters from a string
+const remove_non_ASCII = (str) => str.replace(/[^\x20-\x7E]/g, "");
+console.log(remove_non_ASCII("äÄçÇéÉêw3resouröceÖÐþúÚ"));
+
 //
+// Convert a given string's length to bytes
+const byte_Size = (str) => new Blob([str]).size;
+// or
+const byte_Size2 = (str) => new TextEncoder().encode(str).length;
+console.log(byte_Size("123456"));
+console.log(byte_Size("Hello World"));
+console.log(byte_Size("Ã¢"));
+
 //
+// Replace multiple object keys' names with the values provided
+// Luke revisit
+const rename_keys = (keysMap, obj) =>
+  Object.keys(obj).reduce(
+    (acc, key) => ({
+      ...acc,
+      ...{ [keysMap[key] || key]: obj[key] },
+    }),
+    {}
+  );
+const obj = { name: "Bobo", job: "Programmer", shoeSize: 100 };
+console.log("Original Object");
+console.log(obj);
+console.log("-------------------------------------");
+let result = rename_keys({ name: "firstName", job: "Actor" }, obj);
+console.log("New Object");
+console.log(result);
+
 //
+// Return the minimum-maximum value of an array, after applying the provided function to set a comparing rule
+const reduce_Which = (arr, comparator = (a, b) => a - b) =>
+  arr.reduce((a, b) => (comparator(a, b) >= 0 ? b : a));
+console.log(reduce_Which([1, 3, 2]));
+console.log(reduce_Which([10, 30, 20], (a, b) => b - a));
+console.log(
+  reduce_Which(
+    [
+      { name: "Kevin", age: 16 },
+      { name: "John", age: 20 },
+      { name: "Ani", age: 19 },
+    ],
+    (a, b) => a.age - b.age
+  )
+);
+
 //
+// Returns true if the provided predicate function returns true for all elements in a collection, false otherwise
+const all = (arr, fn = Boolean) => arr.every(fn);
+console.log(all([4, 2, 3], (x) => x > 1));
+console.log(all([4, 2, 3], (x) => x < 1));
+console.log(all([1, 2, 3]));
+
 //
+// Split the values of two given arrays into two groups. If an element in the filter is true, the corresponding element in the collection belongs to the first group; otherwise, it belongs to the second group
+const bifurcate = (arr, filter) => {
+  let arr1 = [];
+  let arr2 = [];
+  arr.reduce((acc, val, i) => {
+    return filter[i] === true ? arr1.push(val) : arr2.push(val);
+  }, arr[0]);
+  return { arr1, arr2 };
+};
+console.log(bifurcate([1, 2, 3, 4], [true, true, false, true]));
+console.log(bifurcate([1, 2, 3, 4], [true, true, true, true]));
+console.log(bifurcate([1, 2, 3, 4], [false, false, false, false]));
+
 //
+// Remove specified elements from the left of a given array of elements
+// I'm removing n = 1 in the params, cause no reason to have it
+const remove_from_left = (arr, n) =>
+  n > 0
+    ? arr.slice(n)
+    : console.log("No number provided in the second argument");
+console.log(remove_from_left([1, 2, 3]));
+console.log(remove_from_left([1, 2, 3], 1));
+console.log(remove_from_left([1, 2, 3], 2));
+console.log(remove_from_left([1, 2, 3], 4));
+
 //
+// Remove specified elements from the right of a given array of elements
+// I'm removing n = 1 in the params, cause no reason to have it
+const remove_from_right = (arr, n) =>
+  n < 0
+    ? arr.slice(n)
+    : console.log("No number provided in the second argument");
+
+console.log(remove_from_right([1, 2, 3]));
+console.log(remove_from_right([1, 2, 3], -1));
+console.log(remove_from_right([1, 2, 3], -2));
+console.log(remove_from_right([1, 2, 3], -4));
+
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+// Extend a 3-digit color code to a 6-digit color code
+const extend_Hex = (shortHex) => (
+
+)
+
+console.log(extend_Hex('#03f'));
+console.log(extend_Hex('05a'));
 //
 //
 //
