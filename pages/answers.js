@@ -1762,15 +1762,53 @@ console.log(extend_Hex("#03f"));
 console.log(extend_Hex("05a"));
 
 //
-// 21
+// Get every nth element from an array (1 = every element, 2 = every other, etc)
+const every_nth = (arr, nth) => arr.filter((x, i) => i % nth === nth - 1);
+console.log(every_nth([1, 2, 3, 4, 5, 6], 1));
+console.log(every_nth([1, 2, 3, 4, 5, 6], 2));
+console.log(every_nth([1, 2, 3, 4, 5, 6], 3));
+console.log(every_nth([1, 2, 3, 4, 5, 6], 4));
 //
+// Filter out non-unique numbers
+const filter_Non_Unique = (arr) =>
+  arr.filter((i) => arr.indexOf(i) === arr.lastIndexOf(i));
+
+console.log(filter_Non_Unique([1, 2, 2, 3, 4, 4, 5]));
+console.log(filter_Non_Unique([1, 2, 3, 4]));
+
 //
+// Filter out non-unique values in an array, based on a provided comparator function - Check again
+const filter_Non_UniqueBy = (arr, fn) =>
+  arr.filter((v, i) => arr.every((x, j) => (i === j) === fn(v, x)));
+
+console.log(
+  filter_Non_UniqueBy(
+    [
+      { id: 0, value: "a" },
+      { id: 1, value: "b" },
+      { id: 2, value: "c" },
+      { id: 1, value: "d" },
+      { id: 0, value: "e" },
+    ],
+    (a, b) => a.id == b.id
+  )
+);
+
 //
+// Decapitalize the first letter of a string.
+const decapitalize = ([first, ...rest], upperRest = false) =>
+  first.toLowerCase() +
+  (upperRest ? rest.join("").toUpperCase() : rest.join(""));
+console.log(decapitalize("W3resource"));
+console.log(decapitalize("Red", true));
+
 //
-//
-//
-//
-//
+// Create an array out of the arrays by creating each possible pair from the arrays
+const xProd = (a, b) =>
+  a.reduce((acc, x) => acc.concat(b.map((y) => [x, y])), []);
+console.log(xProd([1, 2], ["a", "b"]));
+console.log(xProd([1, 2], [1, 2]));
+console.log(xProd(["a", "b"], ["a", "b"]));
 //
 //
 //

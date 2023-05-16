@@ -1,19 +1,14 @@
 import _ from "lodash";
-const luke = "Luke";
-const extend_Hex = (shortHex) =>
-  "#" +
-  shortHex
-    .slice(shortHex.startsWith("#") ? 1 : 0)
-    .split("")
-    .map((x) => x + x)
-    .join("");
-
-console.log(extend_Hex("#03f"));
-console.log(extend_Hex("05a"));
+const test = "test";
+const decapitalize = ([first, ...rest], upperRest = false) =>
+  first.toLowerCase() +
+  (upperRest ? rest.join("").toUpperCase() : rest.join(""));
+console.log(decapitalize("W3resource"));
+console.log(decapitalize("Red", true));
 function Testing() {
   return (
     <div>
-      <h1>{luke}</h1>
+      <h1>{test}</h1>
     </div>
   );
 }
