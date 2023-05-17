@@ -1,10 +1,10 @@
 import _ from "lodash";
 const test = "test";
-const decapitalize = ([first, ...rest], upperRest = false) =>
-  first.toLowerCase() +
-  (upperRest ? rest.join("").toUpperCase() : rest.join(""));
-console.log(decapitalize("W3resource"));
-console.log(decapitalize("Red", true));
+const sumBy = (arr, fn) => {};
+
+console.log(sumBy([{ n: 4 }, { n: 2 }, { n: 8 }, { n: 6 }], (o) => o.n));
+console.log(sumBy([{ n: -4 }, { n: -2 }, { n: 8 }, { n: 6 }], "n"));
+
 function Testing() {
   return (
     <div>

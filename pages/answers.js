@@ -1804,21 +1804,53 @@ console.log(decapitalize("Red", true));
 
 //
 // Create an array out of the arrays by creating each possible pair from the arrays
-const xProd = (a, b) =>
-  a.reduce((acc, x) => acc.concat(b.map((y) => [x, y])), []);
+const xProd = (arr1, arr2) =>
+  arr1.reduce(
+    (acc, currVal) => acc.concat(arr2.map((item) => [currVal, item])),
+    []
+  );
 console.log(xProd([1, 2], ["a", "b"]));
 console.log(xProd([1, 2], [1, 2]));
 console.log(xProd(["a", "b"], ["a", "b"]));
+
 //
+// Measure the time a function to execute
+const time_taken = (callback) => {
+  return callback();
+};
+console.log("Time taken: " + time_taken(() => Math.pow(2, 10)) + " ms");
+console.log("Time taken: " + time_taken(() => Math.sqrt(225)) + " ms");
+console.log(
+  "Time taken: " + time_taken(() => Math.sqrt(5 * 5 + 6 * 6)) + " ms"
+);
+
 //
+// Convert a value to a safe integer
+const to_Safe_Integer = (num) => console.log(to_Safe_Integer("5.2"));
+console.log(to_Safe_Integer("5.52"));
+console.log(to_Safe_Integer(Infinity));
+
 //
+// Filter out the element(s) of a given array that have one of the specified values
+const without = (arr, ...args) => arr.filter((num) => !args.includes(num));
+console.log(without([2, 1, 2, 3], 1, 2));
+console.log(without([2, 1, 2, 3], 3));
+
 //
+// Find all elements in a given array except the first one. Return the whole array if its length is 1
+const tail = (arr) => (arr.length > 1 ? arr.slice(1) : arr);
+console.log(tail([1, 2, 3]));
+console.log(tail([1]));
+
 //
-//
-//
-//
-//
-//
+// Get the sum of a given array, after mapping each element to a value using the provided function.
+const sumBy = (arr, fn) =>
+  arr
+    .map(typeof fn === "function" ? fn : (val) => val[fn])
+    .reduce((acc, val) => acc + val, 0);
+
+console.log(sumBy([{ n: 4 }, { n: 2 }, { n: 8 }, { n: 6 }], (o) => o.n));
+console.log(sumBy([{ n: -4 }, { n: -2 }, { n: 8 }, { n: 6 }], "n"));
 //
 //
 //
