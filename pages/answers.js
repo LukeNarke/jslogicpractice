@@ -1868,7 +1868,7 @@ console.log(randomIntegerInRange(5, -5))
 console.log(randomIntegerInRange(-2, -7))
 
 //
-// get an array of given n random integers in the specified range
+// Get an array of given n random integers in the specified range
 const random_intArray_In_Range = (min, max, n = 1) =>
   Array.from(
     { length: n },
@@ -1887,16 +1887,75 @@ const minMax = over(Math.min, Math.max)
 console.log(minMax(1, 2, 3, 4, 5))
 console.log(minMax(1, 2, 5, 4, 3))
 console.log(minMax(1, 2, 5, -4, 3))
+
 //
+// Get a sorted array of objects ordered by properties and orders -- not ideal
+const orderBy = (arr, props, orders) =>
+  [...arr].sort((a, b) =>
+    props.reduce((acc, prop, i) => {
+      if (acc === 0) {
+        const [p1, p2] =
+          orders && orders[i] === "desc"
+            ? [b[prop], a[prop]]
+            : [a[prop], b[prop]]
+        acc = p1 > p2 ? 1 : p1 < p2 ? -1 : 0
+      }
+      return acc
+    }, 0)
+  )
+const users = [
+  { name: "fred", age: 48 },
+  { name: "barney", age: 36 },
+  { name: "fred", age: 40 },
+]
+
+console.log(orderBy(users, ["name", "age"], ["asc", "desc"]))
+console.log(orderBy(users, ["name", "age"]))
+
 //
+// Pad a string on both sides with the specified character, if it's shorter than the specified length
+const pad = (str, length, char = " ") =>
+  str.padStart((str.length + length) / 2, char).padEnd(length, char)
+console.log(pad("cat", 8))
+console.log(pad(String(42), 6, "0"))
+console.log(pad("foobar", 3))
+
 //
+// Remove the key-value pairs corresponding to the given keys from an object
+const omit = (obj, arr) =>
+  Object.keys(obj)
+    .filter((key) => !arr.includes(key))
+    .reduce((acc, key) => ((acc[key] = obj[key]), acc), {})
+
+console.log(omit({ a: 1, b: "2", c: 3 }, ["b"]))
+console.log(omit({ a: 1, b: 2, c: 3 }, ["c"]))
+
 //
+// Create an array of key-value pair arrays from a given object
+const object_to_pairs = (obj) => Object.keys(obj).map((key) => [key, obj[key]])
+console.log(object_to_pairs({ a: 1, b: 2 }))
+console.log(object_to_pairs({ a: 1, b: 2, c: 3 }))
+
 //
+// Create an object from the given key-value pairs
+const object_From_Pairs = (arr) =>
+  arr.reduce((a, v) => ((a[v[0]] = v[1]), a), {})
+console.log(
+  object_From_Pairs([
+    ["a", 1],
+    ["b", 2],
+  ])
+)
+console.log(
+  object_From_Pairs([
+    [1, 10],
+    [2, 20],
+    [3, 30],
+  ])
+)
+
 //
-//
-//
-//
-//
+// 42
 //
 //
 //
