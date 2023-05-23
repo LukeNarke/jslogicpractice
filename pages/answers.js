@@ -1955,13 +1955,53 @@ console.log(
 )
 
 //
-// 42
+// Remove false values from a given array
+const compact = (arr) => arr.filter(Boolean)
+console.log(compact([0, 1, false, 2, "", 3, "a", "e" * 23, NaN, "s", 34]))
+console.log(compact([false, NaN, "e" * 23]))
+
 //
+// Split values into two groups. If an element in the filter is true, the corresponding element in the collection belongs to the first group; otherwise, it belongs to the second group
+const bifurcateTwo = (arr, filter) => {
+  let arr1 = []
+  let arr2 = []
+  arr.forEach((val, i) => {
+    filter[i] === true ? arr1.push(val) : arr2.push(val)
+  })
+  return [arr1, arr2]
+}
+console.log(
+  bifurcateTwo(["beep", "boop", "foo", "bar"], [true, true, false, true])
+)
+
 //
+// Convert an integer to a suffixed string, adding am or pm based on its value
+const get_Meridiem_Suffix_Of_Integer = (num) =>
+  num === 0 || num === 24
+    ? "12AM"
+    : num === 12
+    ? "12PM"
+    : num < 12
+    ? (num % 12) + "AM"
+    : (num % 12) + "PM"
+
+console.log(get_Meridiem_Suffix_Of_Integer(0))
+console.log(get_Meridiem_Suffix_Of_Integer(11))
+console.log(get_Meridiem_Suffix_Of_Integer(13))
+console.log(get_Meridiem_Suffix_Of_Integer(25))
+
 //
-//
-//
-//
+// Group the elements of a given array based on the given function 52
+const group_By = (arr, fn) =>
+  arr
+    .map(typeof fn === "function" ? fn : (val) => val[fn])
+    .reduce((acc, val, i) => {
+      acc[val] = (acc[val] || []).concat(arr[i])
+      return acc
+    }, {})
+console.log(group_By([6.1, 4.2, 6.3], Math.sqrt))
+console.log(group_By([6.1, 4.2, 6.3], Math.floor))
+console.log(group_By(["one", "two", "three"], "length"))
 //
 //
 //

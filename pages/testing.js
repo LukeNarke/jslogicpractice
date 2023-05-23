@@ -1,20 +1,12 @@
 import _ from "lodash"
 const test = "test"
-const object_From_Pairs = (arr) =>
-  arr.reduce((acc, val) => ((acc[val[0]] = val[1]), acc), {})
-console.log(
-  object_From_Pairs([
-    ["a", 1],
-    ["b", 2],
-  ])
-)
-console.log(
-  object_From_Pairs([
-    [1, 10],
-    [2, 20],
-    [3, 30],
-  ])
-)
+
+const group_By = (arr, fn) =>
+  arr.map(typeof fn === "function" ? fn : (val) => val[fn])
+
+console.log(group_By([6.1, 4.2, 6.3], Math.sqrt))
+console.log(group_By([6.1, 4.2, 6.3], Math.floor))
+console.log(group_By(["one", "two", "three"], "length"))
 
 function Testing() {
   return (
