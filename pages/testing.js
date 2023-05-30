@@ -1,20 +1,12 @@
 import _ from "lodash"
 const test = "test"
 
-const group_By = (arr, fn) => {
-  let arr1 = arr.map(typeof fn === "function" ? fn : (val) => val[fn])
-  let arr2 = arr1.reduce((acc, val, i) => {
-    acc[val] = (acc[val] || []).concat(arr[i])
-    console.log("acc[val]", acc[val])
-    console.log("arr[i]", arr[i])
-    return acc
-  }, {})
-  return arr2
-}
-
-console.log(group_By([6.1, 4.2, 6.3], Math.sqrt))
-console.log(group_By([6.1, 4.2, 6.3], Math.floor))
-console.log(group_By(["one", "two", "three"], "length"))
+const averageBy = (arr, fn) =>
+  arr
+    .map(typeof fn === "function" ? fn : (val) => val[fn])
+    .reduce((acc, val) => acc + val, 0) / arr.length
+console.log(averageBy([{ a: 40 }, { a: 20 }, { a: 80 }, { a: 60 }], (o) => o.a))
+console.log(averageBy([{ a: 4 }, { a: 2 }, { a: 8 }, { a: 6 }], "a"))
 
 function Testing() {
   return (

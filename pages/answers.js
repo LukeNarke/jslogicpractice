@@ -2002,16 +2002,43 @@ const group_By = (arr, fn) =>
 console.log(group_By([6.1, 4.2, 6.3], Math.sqrt))
 console.log(group_By([6.1, 4.2, 6.3], Math.floor))
 console.log(group_By(["one", "two", "three"], "length"))
+
 //
+// Initialize a two-dimensional array of given size and value
+const initialize_2D_Array = (w, h, val = null) =>
+  Array.from({ length: h }).map(() => Array.from({ length: w }).fill(val))
+
+console.log(initialize_2D_Array(2, 2, 0))
+console.log(initialize_2D_Array(3, 3, 3))
+
 //
+// Initialize an array containing numbers in the specified range. Start and end are inclusive of their common point of difference
+const initialize_Array_With_Range = (end, start = 0, step = 1) =>
+  Array.from({ length: Math.ceil((end + 1 - start) / step) }).map(
+    (v, i) => i * step + start
+  )
+
+console.log(initialize_Array_With_Range(5))
+console.log(initialize_Array_With_Range(8, 3))
+console.log(initialize_Array_With_Range(6, 0, 2))
+
 //
+// Check whether all elements in a given array are equal or not
+const allEqual = (arr) => arr.every((val) => val === arr[0])
+console.log(allEqual([1, 2, 3, 4, 5, 6]))
+console.log(allEqual([12, 12, 12, 12]))
+
 //
+// Compute the average of an array, after mapping each element to a value using the provided function
+const averageBy = (arr, fn) =>
+  arr
+    .map(typeof fn === "function" ? fn : (val) => val[fn])
+    .reduce((acc, val) => acc + val, 0) / arr.length
+
+console.log(averageBy([{ a: 40 }, { a: 20 }, { a: 80 }, { a: 60 }], (o) => o.a))
+console.log(averageBy([{ a: 4 }, { a: 2 }, { a: 8 }, { a: 6 }], "a"))
 //
-//
-//
-//
-//
-//
+// 58
 //
 //
 //
