@@ -2038,11 +2038,39 @@ const averageBy = (arr, fn) =>
 console.log(averageBy([{ a: 40 }, { a: 20 }, { a: 80 }, { a: 60 }], (o) => o.a))
 console.log(averageBy([{ a: 4 }, { a: 2 }, { a: 8 }, { a: 6 }], "a"))
 //
-// 58
+// Cast the provided value as an array if it's not one
+const castArray = (val) => (Array.isArray(val) ? val : [val])
+console.log(castArray("w3r"))
+console.log(castArray([100]))
+
 //
+// Chain asynchronous functions
+function fetchUsers() {
+  return fetch("https://jsonplaceholder.typicode.com/users").then((response) =>
+    response.json()
+  )
+}
+
+function fetchPosts(userId) {
+  return fetch(
+    `https://jsonplaceholder.typicode.com/posts?userId=${userId}`
+  ).then((response) => response.json())
+}
+
+fetchUsers()
+  .then((users) => {
+    const userId = users[0].id
+    return fetchPosts(userId)
+  })
+  .then((posts) => console.log(posts))
+  .catch((error) => console.error(error))
+
 //
-//
-//
+// Get the first non-null / undefined argument
+const firstDefined = (...args) =>
+  args.find((value) => ![null, undefined, NaN].includes(value))
+console.log(firstDefined(null, undefined, "", NaN, "abcd"))
+
 //
 //
 //
