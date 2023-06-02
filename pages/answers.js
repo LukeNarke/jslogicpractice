@@ -2072,11 +2072,36 @@ const firstDefined = (...args) =>
 console.log(firstDefined(null, undefined, "", NaN, "abcd"))
 
 //
+// Count a value in an array
+const countOccurrences = (arr, val) =>
+  arr.reduce((a, v) => (v === val ? a + 1 : a), 0)
+console.log(countOccurrences([1, 1, 2, 1, 2, 3], 1))
+console.log(countOccurrences([1, 1, 2, 1, 2, 3], 2))
+console.log(countOccurrences([1, 1, 2, 1, 2, 3], 3))
+
 //
+// Create a deep clone of an object
+const deepClone = (obj) => {
+  let clone = Object.assign({}, obj)
+  Object.keys(clone).forEach(
+    (key) =>
+      (clone[key] =
+        typeof obj[key] === "object" ? deepClone(obj[key]) : obj[key])
+  )
+  return Array.isArray(obj)
+    ? (clone.length = obj.length) && Array.from(clone)
+    : clone
+}
+const a = { foo: "bar", obj: { a: 1, b: 2 } }
+const b = deepClone(a) // a !== b, a.obj !== b.obj
+console.log(b)
+
 //
-//
-//
-//
+// Iterate over all the properties of an object, running a callback for each one
+const forOwn = (obj, fn) =>
+  Object.keys(obj).forEach((key) => fn(obj[key], key, obj))
+forOwn({ foo: "bar", a: 1 }, (v) => console.log(v)) // 'bar', 1
+
 //
 //
 //
