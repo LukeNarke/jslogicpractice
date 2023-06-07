@@ -2151,7 +2151,7 @@ const people = {
 }
 console.log(mapValues(people, (p) => p.age))
 //
-//
+// 85
 //
 //
 //
