@@ -2150,12 +2150,35 @@ const people = {
   pebbles: { person: "pebbles", age: 1 },
 }
 console.log(mapValues(people, (p) => p.age))
+
 //
-// 85
+// Get the maximum value of an array, after mapping each element to a value using the provided function
+const maxBy = (arr, fn) =>
+  Math.max(...arr.map(typeof fn === "function" ? fn : (val) => val[fn]))
+console.log(maxBy([{ n: 4 }, { n: 2 }, { n: 8 }, { n: 6 }], (o) => o.n))
+console.log(maxBy([{ n: 4 }, { n: 2 }, { n: 8 }, { n: 6 }], "n"))
+
 //
+// Get the n maximum elements from the provided array. If n is greater than or equal to the provided array's length, return the original array (sorted in descending order)
+function maxN(arr, n = arr.length) {
+  return n >= arr.length ? arr.length : arr.sort((a, b) => b - a).slice(0, n)
+}
+console.log(maxN([1, 2, 3]))
+console.log(maxN([1, 2, 3], 2))
+
 //
-//
-//
+// Get the median of an array of numbers
+const median = (arr) => {
+  let sortedArr = arr.sort((a, b) => a - b) // Make a copy of the array and sort it in ascending order
+  let mid = Math.floor(sortedArr.length / 2)
+  return sortedArr.length % 2 === 0
+    ? // If the array has an even number of elements, return the average of the middle two
+      (sortedArr[mid - 1] + sortedArr[mid]) / 2
+    : // Otherwise, return the middle element
+      sortedArr[mid]
+}
+console.log(median([5, 6, 50, 1, -5]))
+console.log(median([1, 2, 3, 4, 5]))
 //
 //
 //
