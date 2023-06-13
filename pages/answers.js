@@ -2179,23 +2179,93 @@ const median = (arr) => {
 }
 console.log(median([5, 6, 50, 1, -5]))
 console.log(median([1, 2, 3, 4, 5]))
+
 //
+// Negates a predicate function
+const negate =
+  (func) =>
+  (...args) =>
+    !func(...args)
+console.log([1, 2, 3, 4, 5, 6].filter(negate((n) => n % 2 === 0)))
+
 //
+// Nest a given flat array of objects linked to one another recursively
+const nest = (items, id = null, link = "parent_id") =>
+  items
+    .filter((item) => item[link] === id)
+    .map((item) => ({ ...item, children: nest(items, item.id) }))
+// One top level comment
+const comments = [
+  { id: 1, parent_id: null },
+  { id: 2, parent_id: 1 },
+  { id: 3, parent_id: 1 },
+  { id: 4, parent_id: 2 },
+  { id: 5, parent_id: 4 },
+]
+const nestedComments = nest(comments)
+console.log(nestedComments)
+
 //
+// Program that returns true if the provided predicate function returns false for all elements in a collection, false otherwise
+const none = (arr, fn = Boolean) => !arr.some(fn)
+console.log(none([0, 1, 3, 0], (x) => x == 2))
+console.log(none([0, 0, 0]))
+
 //
+// Create a function that gets the argument at index n. If n is negative, the nth argument from the end is returned
+const nthArg =
+  (n) =>
+  (...args) =>
+    args.slice(n)[0]
+const third = nthArg(2)
+third(1, 2, 3) // 3
+third(1, 2) // undefined
+const last = nthArg(-1)
+console.log(last(1, 2, 3, 4, 5))
+
 //
+// Remove an event listener from an element
+const off = (el, evt, fn, opts = false) => el.removeEventListener(evt, fn, opts)
+const fn = () => console.log("!")
+document.body.addEventListener("click", fn)
+console.log(off(document.body, "click", fn))
+
 //
+// Move the specified amount of elements to the end of the array
+const offset = (arr, offset) => [...arr.slice(offset), ...arr.slice(0, offset)]
+console.log(offset([1, 2, 3, 4, 5], 2))
+console.log(offset([1, 2, 3, 4, 5], -2))
+
+// Add an event listener to an element with the ability to use event delegation
+const on = (el, evt, fn, opts = {}) => {
+  const delegatorFn = (e) =>
+    e.target.matches(opts.target) && fn.call(e.target, e)
+  el.addEventListener(
+    evt,
+    opts.target ? delegatorFn : fn,
+    opts.options || false
+  )
+  if (opts.target) return delegatorFn
+}
+
+const fnTwo = () => console.log("!")
+console.log(on(document.body, "click", fnTwo))
+console.log(on(document.body, "click", fnTwo, { target: "p" }))
+console.log(on(document.body, "click", fnTwo, { options: true }))
+
 //
+// Pick the key-value pairs corresponding to the given keys from an object
+const pick = (obj, arr) =>
+  arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {})
+console.log(pick({ a: 1, b: "2", c: 3 }, ["a", "c"]))
+
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
+// Create an object composed of the properties the given function returns truthy for. The function is invoked with two arguments: (value, key
+const pickBy = (obj, fn) =>
+  Object.keys(obj)
+    .filter((k) => fn(obj[k], k))
+    .reduce((acc, key) => ((acc[key] = obj[key]), acc), {})
+console.log(pickBy({ a: 1, b: "2", c: 3 }, (x) => typeof x === "number"))
 //
 //
 //
