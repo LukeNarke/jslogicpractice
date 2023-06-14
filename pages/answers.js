@@ -2268,7 +2268,30 @@ const pickBy = (obj, fn) =>
 console.log(pickBy({ a: 1, b: "2", c: 3 }, (x) => typeof x === "number"))
 //
 //
-//
+// Filter an array of objects based on a condition while also filtering out unspecified keys
+const reducedFilter = (data, keys, fn) =>
+  data.filter(fn).map(
+    (el) =>
+      keys.reduce((acc, key) => {
+        acc[key] = el[key]
+        return acc
+      }),
+    {}
+  )
+const dataTwo = [
+  {
+    id: 1,
+    name: "john",
+    age: 24,
+  },
+  {
+    id: 2,
+    name: "mike",
+    age: 50,
+  },
+]
+
+console.log(reducedFilter(dataTwo, ["id", "name"], (item) => item.age > 24))
 //
 //
 //
