@@ -2368,10 +2368,36 @@ const doubleEvenNumbers = when(
 )
 console.log(doubleEvenNumbers(2))
 console.log(doubleEvenNumbers(1))
+
 //
+// Returns true if the given value is a number, false otherwise
+const validateNumber = (n) =>
+  !isNaN(parseFloat(n)) && isFinite(n) && Number(n) == n
+console.log(validateNumber("200"))
+console.log(validateNumber("10"))
+console.log(validateNumber("abc"))
+
 //
-//
-//
+// Create an array of elements, ungrouping the elements in an array produced by zip and applying the provided function
+const unzipWith = (arr, fn) =>
+  arr
+    .reduce(
+      (acc, val) => (val.forEach((v, i) => acc[i].push(v)), acc),
+      Array.from({
+        length: Math.max(...arr.map((x) => x.length)),
+      }).map((x) => [])
+    )
+    .map((val) => fn(...val))
+
+console.log(
+  unzipWith(
+    [
+      [1, 10, 100],
+      [2, 20, 200],
+    ],
+    (...args) => args.reduce((acc, v) => acc + v, 0)
+  )
+)
 //
 //
 //

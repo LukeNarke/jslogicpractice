@@ -1,11 +1,24 @@
 import _ from "lodash"
 const test = "test"
+const unzipWith = (arr, fn) =>
+  arr
+    .reduce(
+      (acc, val) => (val.forEach((v, i) => acc[i].push(v)), acc),
+      Array.from({
+        length: Math.max(...arr.map((x) => x.length)),
+      }).map((x) => [])
+    )
+    .map((val) => fn(...val))
 
-const when = (pred, whenTrue) => (x) => pred(x) ? whenTrue(x) : x
-const doubleEvenNumbers = when((x) => x % 2 === 0, x * 2)
-console.log(doubleEvenNumbers(2))
-console.log(doubleEvenNumbers(1))
-
+console.log(
+  unzipWith(
+    [
+      [1, 10, 100],
+      [2, 20, 200],
+    ],
+    (...args) => args.reduce((acc, v) => acc + v, 0)
+  )
+)
 function Testing() {
   return (
     <div>
