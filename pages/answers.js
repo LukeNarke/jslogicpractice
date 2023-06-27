@@ -2398,12 +2398,54 @@ console.log(
     (...args) => args.reduce((acc, v) => acc + v, 0)
   )
 )
+
 //
+// Get all distinct values (from the right side of the array) of an array, based on a provided comparator function
+const uniqueElementsByRight = (arr, fn) =>
+  arr.reduceRight((acc, v) => {
+    if (!acc.some((x) => fn(v, x))) acc.push(v)
+    return acc
+  }, [])
+
+console.log(
+  uniqueElementsByRight(
+    [
+      { id: 0, value: "a" },
+      { id: 1, value: "b" },
+      { id: 2, value: "c" },
+      { id: 1, value: "d" },
+      { id: 0, value: "e" },
+    ],
+    (a, b) => a.id == b.id
+  )
+)
+
 //
+// Get all unique values of an array, based on a provided comparator function
+const uniqueElementsBy = (arr, fn) =>
+  arr.reduce((acc, v) => {
+    if (!acc.some((x) => fn(v, x))) acc.push(v)
+    return acc
+  }, [])
+
+console.log(
+  uniqueElementsBy(
+    [
+      { id: 0, value: "a" },
+      { id: 1, value: "b" },
+      { id: 2, value: "c" },
+      { id: 1, value: "d" },
+      { id: 0, value: "e" },
+    ],
+    (a, b) => a.id == b.id
+  )
+)
+
 //
-//
-//
-//
+// Get the nth element of a given array
+const nthElement = (arr, n = 0) => arr.slice(n)[0]
+console.log(nthElement(["a", "b", "c"], 1))
+console.log(nthElement(["a", "b", "b"], -3))
 //
 //
 //

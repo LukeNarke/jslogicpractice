@@ -1,24 +1,8 @@
 import _ from "lodash"
 const test = "test"
-const unzipWith = (arr, fn) =>
-  arr
-    .reduce(
-      (acc, val) => (val.forEach((v, i) => acc[i].push(v)), acc),
-      Array.from({
-        length: Math.max(...arr.map((x) => x.length)),
-      }).map((x) => [])
-    )
-    .map((val) => fn(...val))
-
-console.log(
-  unzipWith(
-    [
-      [1, 10, 100],
-      [2, 20, 200],
-    ],
-    (...args) => args.reduce((acc, v) => acc + v, 0)
-  )
-)
+const nthElement = (arr, n = 0) => arr.slice(n)[0]
+console.log(nthElement(["a", "b", "c"], 1))
+console.log(nthElement(["a", "b", "b"], -3))
 function Testing() {
   return (
     <div>
