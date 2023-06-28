@@ -2446,14 +2446,58 @@ console.log(
 const nthElement = (arr, n = 0) => arr.slice(n)[0]
 console.log(nthElement(["a", "b", "c"], 1))
 console.log(nthElement(["a", "b", "b"], -3))
+
 //
+// Get every element in any of the two arrays at once
+const union = (a, b) => Array.from(new Set([...a, ...b]))
+console.log(union([1, 2, 3], [4, 3, 2]))
+console.log(union([1, 2, 3], [1, 2, 3]))
+
 //
+// Build  an array, using an iterator function and an initial seed value
+const unfold = (fn, seed) => {
+  let result = [],
+    val = [null, seed]
+  while ((val = fn(val[1]))) result.push(val[0])
+  return result
+}
+let f = (n) => (n > 50 ? false : [-n, n + 10])
+console.log(unfold(f, 10))
+
 //
+// Unflatten an object with the paths for keys
+const unflattenObject = (obj) =>
+  Object.keys(obj).reduce((acc, k) => {
+    if (k.indexOf(".") !== -1) {
+      const keys = k.split(".")
+      Object.assign(
+        acc,
+        JSON.parse(
+          "{" +
+            keys
+              .map((v, i) => (i !== keys.length - 1 ? `"${v}":{` : `"${v}":`))
+              .join("") +
+            obj[k] +
+            "}".repeat(keys.length)
+        )
+      )
+    } else acc[k] = obj[k]
+    return acc
+  }, {})
+console.log(unflattenObject({ "a.b.c": 1, d: 1 }))
+
 //
-//
-//
-//
-//
+// Uncurry a function up to depth n
+const uncurry =
+  (fn, n = 1) =>
+  (...args) => {
+    const next = (acc) => (args) => args.reduce((x, y) => x(y), acc)
+    if (n > args.length) throw new RangeError("Arguments too few!")
+    return next(fn)(args.slice(0, n))
+  }
+const add = (x) => (y) => (z) => x + y + z
+const uncurriedAdd = uncurry(add, 3)
+console.log(uncurriedAdd(1, 2, 3))
 //
 //
 //
